@@ -37,19 +37,19 @@ public class Login extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
 
-        //checks if the player exists and gets a reference to that player
-
-        SharedPreferences preferences = getSharedPreferences("PREFS", 0);
-        playerName = preferences.getString("playerName", "");
-        if (!playerName.equals((""))){
-            playerRef = database.getReference("players/"+playerName);
-            addEventListener();
-            playerRef.setValue("");
-        }
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //checks if the player exists and gets a reference to that player
+
+                SharedPreferences preferences = getSharedPreferences("PREFS", 0);
+                playerName = preferences.getString("playerName", "");
+                if (!playerName.equals((""))){
+                    playerRef = database.getReference("players/"+playerName);
+                    addEventListener();
+                    playerRef.setValue("");
+                }
+
                 //for logging the player in
                 playerName = editText.getText().toString();
                 editText.setText("");
