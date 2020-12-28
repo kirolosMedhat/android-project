@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class roomSelectionActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference roomRef;
-//    DatabaseReference roomsRef;
+  DatabaseReference roomsRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class roomSelectionActivity extends AppCompatActivity {
         });
 
         //shows if new rooms are available
-//        addRoomsEventListener();
+        addRoomsEventListener();
     }
     private void addRoomEventListener(){
         roomRef.addValueEventListener(new ValueEventListener() {
@@ -103,7 +104,7 @@ public class roomSelectionActivity extends AppCompatActivity {
 
     // this function was supposed to do show list of available rooms but it has been doing some wonky stuff so it's commented for now
 
-   /* private  void   addRoomsEventListener(){
+    private  void   addRoomsEventListener(){
         roomsRef = database.getReference("rooms");
         roomsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,11 +112,12 @@ public class roomSelectionActivity extends AppCompatActivity {
                 //shows a list of available rooms
                 roomsList.clear();
                 Iterable<DataSnapshot> rooms = snapshot.getChildren();
-                for (DataSnapshot dataSnapshot : rooms)(
-                        roomsList.add(dataSnapshot.getKey())
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(roomSelectionActivity.this,R.layout.support_simple_spinner_dropdown_item, roomsList);
-                        listView.setAdapter(adapter);)
+                for (DataSnapshot dataSnapshot : rooms) {
 
+                        roomsList.add(dataSnapshot.getKey());
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(roomSelectionActivity.this,R.layout.support_simple_spinner_dropdown_item, roomsList);
+                        listView.setAdapter(adapter);
+                }
             }
 
             @Override
@@ -123,5 +125,6 @@ public class roomSelectionActivity extends AppCompatActivity {
                 //error do nothing
             }
         });
-    }*/
+
+    }
 }
