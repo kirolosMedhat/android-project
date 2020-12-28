@@ -90,4 +90,3 @@ public class multiplayerActivity extends AppCompatActivity {
     }
 
 }
-}

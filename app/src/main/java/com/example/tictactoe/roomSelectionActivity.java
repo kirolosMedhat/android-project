@@ -37,7 +37,7 @@ public class roomSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roomSelection);
+        setContentView(R.layout.activity_roomselection);
 
         database = FirebaseDatabase.getInstance();
 
