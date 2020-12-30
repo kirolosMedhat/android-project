@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
                     addEventListener();
                     playerRef.setValue("");
                 }
+                startActivity(new Intent(getApplicationContext(), roomSelectionActivity.class));
             }
         });
     }

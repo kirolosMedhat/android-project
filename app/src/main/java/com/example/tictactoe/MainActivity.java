@@ -10,10 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-private TextView playeronescore,playertwoscore,playerstatus;
+private TextView playeronescore,playertwoscore,playerstatus,DrawScore;
 private Button [] buttons  =new Button[9];
 private Button resetgame;
-private int playeronescorecount,playertwoscorecount,numberofrounds;
+private int playeronescorecount,playertwoscorecount,numberofrounds,drawscore;
 boolean activeplayer;
 //we will put 2 as empty,,0 as player 1,,1 as player 2
 int [] gamestate={2,2,2,2,2,2,2,2,2}; //this means the square is empty.
@@ -32,6 +32,7 @@ int[][] winningpositions={
         playeronescore=(TextView)findViewById(R.id.PlayerOneScore);
         playertwoscore=(TextView)findViewById(R.id.PlayerTwoScore);
         playerstatus=(TextView)findViewById(R.id.PlayerStatus);
+        DrawScore=(TextView)findViewById(R.id.Draw);
         resetgame=(Button)findViewById(R.id.resetgame);
         for (int i=0;i<buttons.length;i++)
         {
@@ -43,6 +44,7 @@ int[][] winningpositions={
         numberofrounds=0;
         playeronescorecount=0;
         playertwoscorecount=0;
+        drawscore=0;
         activeplayer=true;
     }
 
@@ -89,12 +91,24 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
         }
         else if (numberofrounds==9) //no winner
         {
+            drawscore++;
+            updatePLayerScore();
             Toast.makeText(this,"Draw!",Toast.LENGTH_SHORT).show();
             playAgain();
         }
         else
         {
             activeplayer=!activeplayer; //to switch player
+        }
+        //Playerstatus
+        if(playeronescorecount > playertwoscorecount){
+            playerstatus.setText("Player One is Winning!");
+        }
+        else if(playertwoscorecount > playeronescorecount){
+            playerstatus.setText("Player Two is Winning!");
+        }
+        else{
+            playerstatus.setText("");
         }
 
         //reset game button
@@ -104,6 +118,7 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
                 playAgain();
                 playeronescorecount=0;
                 playertwoscorecount=0;
+                drawscore=0;
                 playerstatus.setText("");
                 updatePLayerScore();
             }
@@ -127,6 +142,7 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
     {
         playeronescore.setText(Integer.toString(playeronescorecount));
         playertwoscore.setText(Integer.toString(playertwoscorecount));
+        DrawScore.setText(Integer.toString(drawscore));
     }
     public void playAgain(){
         numberofrounds=0;
