@@ -31,7 +31,7 @@ public class HomeActivty extends AppCompatActivity {
             }
         });
         Wifimultiplayer=(Button) findViewById(R.id.Wifibtt);
-        SinglePlayer.setOnClickListener(new View.OnClickListener() {
+        Wifimultiplayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Login.class));
