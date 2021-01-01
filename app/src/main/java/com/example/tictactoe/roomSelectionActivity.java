@@ -63,6 +63,7 @@ public class roomSelectionActivity extends AppCompatActivity {
                 roomRef = database.getReference("rooms/"+roomName+"/player1");
                 addRoomEventListener();
                 roomRef.setValue(playerName);
+
             }
         });
 
