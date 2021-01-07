@@ -1,7 +1,9 @@
 package com.example.tictactoe;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity ;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-private TextView playeronescore,playertwoscore,playerstatus,DrawScore;
+private TextView playeronescore,playertwoscore,playerstatus,DrawScore,PlayerOne,PlayerTwo;
 private Button [] buttons  =new Button[9];
 private Button resetgame;
 private int playeronescorecount,playertwoscorecount,numberofrounds,drawscore;
@@ -22,17 +24,16 @@ int[][] winningpositions={
         {0,3,6},{1,4,7},{2,5,8}, //columns
         {0,4,8},{2,4,6} //cross
 };
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        PlayerOne=(TextView)findViewById(R.id.PlayerOne);
+        PlayerTwo=(TextView)findViewById(R.id.PlayerTwo);
         playeronescore=(TextView)findViewById(R.id.PlayerOneScore);
         playertwoscore=(TextView)findViewById(R.id.PlayerTwoScore);
         playerstatus=(TextView)findViewById(R.id.PlayerStatus);
-        DrawScore=(TextView)findViewById(R.id.Draw);
+        DrawScore=(TextView)findViewById(R.id.DrawScore);
         resetgame=(Button)findViewById(R.id.resetgame);
         for (int i=0;i<buttons.length;i++)
         {
@@ -60,7 +61,7 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
         //play!!!
         if(activeplayer)
         {
-            ((Button)v).setText("x");
+            ((Button)v).setText("X");
             ((Button)v).setTextColor(Color.parseColor("#CFDAFF"));
             gamestate[gameStatePointer]=0;
         }
@@ -73,7 +74,6 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
         numberofrounds++;
         if(checkwinner()) //we have a winner
         {
-            //////////////////
             if (activeplayer)
             {
                 playeronescorecount++;
@@ -115,29 +115,127 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
         resetgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playAgain();
                 playeronescorecount=0;
                 playertwoscorecount=0;
                 drawscore=0;
                 playerstatus.setText("");
                 updatePLayerScore();
+                for (int i=0;i<buttons.length;i++) {
+                    gamestate[i] = 2;
+                    buttons[i].setText("");
+                    buttons[i].setBackgroundColor(Color.parseColor("#148F77"));
+                }
             }
         });
     }
     public boolean checkwinner()
     {
        boolean winnerResult=false;
+       int i=0;
        for (int[]winningPosition:winningpositions)
        {
-          if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
-                  gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
-                      gamestate[winningPosition[0]]!=2)
+          if(i==0)
           {
-              winnerResult=true;
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[0].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[1].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[2].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }else  if(i==1)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[3].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[4].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[5].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
           }
+          else  if(i==2)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[6].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[7].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[8].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }
+          else  if(i==3)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[0].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[3].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[6].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }
+          else  if(i==4)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[1].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[4].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[7].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }else  if(i==5)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[2].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[5].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[8].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }else  if(i==6)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[0].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[4].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[8].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }else  if(i==7)
+          {
+              if (gamestate[winningPosition[0]]==gamestate[winningPosition[1]] &&
+                      gamestate[winningPosition[1]]==gamestate[winningPosition[2]] &&
+                      gamestate[winningPosition[0]]!=2)
+              {
+                  buttons[2].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[4].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  buttons[6].setBackgroundColor(Color.parseColor("#F5F5DC"));
+                  winnerResult=true;
+              }
+          }
+          else
+          {
+              winnerResult=false;
+          }
+
+           i++;
        }
        return winnerResult;
     }
+
     public void updatePLayerScore()
     {
         playeronescore.setText(Integer.toString(playeronescorecount));
@@ -145,12 +243,51 @@ int gameStatePointer=Integer.parseInt(buttonId.substring(buttonId.length()-1,but
         DrawScore.setText(Integer.toString(drawscore));
     }
     public void playAgain(){
-        numberofrounds=0;
-        activeplayer=true;
-        for (int i=0;i<buttons.length;i++)
+        if (checkwinner()==false)
         {
-           gamestate[i]=2;
-           buttons[i].setText("");
+
+            numberofrounds = 0;
+            activeplayer = true;
+
+
+            AlertDialog.Builder win=new AlertDialog.Builder(MainActivity.this);
+            win.setMessage("draw!");
+            win.setCancelable(false);
+            win.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i=0;i<buttons.length;i++) {
+                        gamestate[i] = 2;
+                        buttons[i].setText("");
+                        buttons[i].setBackgroundColor(Color.parseColor("#148F77"));
+                    }
+                }
+            });
+            AlertDialog alertDialog=win.create();
+            alertDialog.show();
+
+        }
+        else {
+            numberofrounds = 0;
+            activeplayer = true;
+            AlertDialog.Builder win = new AlertDialog.Builder(MainActivity.this);
+            win.setMessage("congratulations!");
+            win.setCancelable(false);
+            win.setPositiveButton("thanks", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < buttons.length; i++) {
+                        gamestate[i] = 2;
+                        buttons[i].setText("");
+                        buttons[i].setBackgroundColor(Color.parseColor("#148F77"));
+                    }
+                }
+            });
+            AlertDialog alertDialog = win.create();
+            alertDialog.show();
         }
     }
 }

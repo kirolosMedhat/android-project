@@ -41,7 +41,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //checks if the player exists and gets a reference to that player
-
                 SharedPreferences preferences = getSharedPreferences("PREFS", 0);
                 playerName = preferences.getString("playerName", "");
                 if (!playerName.equals((""))){
@@ -52,8 +51,12 @@ public class Login extends AppCompatActivity {
 
                 //for logging the player in
                 playerName = editText.getText().toString();
-                editText.setText("");
-                if (!playerName.equals("")){
+                if(playerName.equals(""))
+                {
+                    editText.setText("Defult");
+                }
+                else if (!playerName.equals(""))
+                {
                     loginButton.setText("LOGGING IN");
                     loginButton.setEnabled(false);
                     playerRef = database.getReference("players/"+playerName);
